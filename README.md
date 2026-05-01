@@ -7,8 +7,11 @@ A vendor-independent asynchronous FIFO module written in Verilog.
 It is written in Verilog-2005 to help understand the internal architecture of asynchronous FIFOs.  
 The testbench is written in SystemVerilog-2012.
 
-## Features  
+## Status
+![Version](https://img.shields.io/badge/Version-v0.10-green)
+![license](https://img.shields.io/badge/license-CERN--OHL--W_v2-blue)
 
+## Features  
 ### Almost Full / Empty  
 Asserts *Almost Full* / *Almost Empty* one cycle before the FIFO reaches Full / Empty.
 
@@ -56,15 +59,10 @@ Copyright AUDIY 2026.
 
 This source describes Open Hardware and is licensed under the CERN-OHL-W v2.
 
-You may redistribute and modify this source and make products using it under  
-the terms of the CERN-OHL-W v2 (https://cern.ch/cern-ohl).
+You may redistribute and modify this source and make products using it under the terms of the CERN-OHL-W v2 (https://cern.ch/cern-ohl).
 
-This source is distributed WITHOUT ANY EXPRESS OR IMPLIED WARRANTY,  
-INCLUDING OF MERCHANTABILITY, SATISFACTORY QUALITY AND FITNESS FOR A  
-PARTICULAR PURPOSE. Please see the CERN-OHL-W v2 for applicable conditions.
+This source is distributed WITHOUT ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING OF MERCHANTABILITY, SATISFACTORY QUALITY AND FITNESS FOR A PARTICULAR PURPOSE. Please see the CERN-OHL-W v2 for applicable conditions.
 
 Source location: https://github.com/AUDIY/ASYNC_FIFO
 
-As per CERN-OHL-W v2 section 4.1, should You produce hardware based on these  
-sources, You must maintain the Source Location visible on the external case  
-of the ASYNC_FIFO or other products you make using this source.
+As per CERN-OHL-W v2 section 4.1, should You produce hardware based on these sources, You must maintain the Source Location visible on the external case of the ASYNC_FIFO or other products you make using this source.

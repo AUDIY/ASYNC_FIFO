@@ -7,6 +7,10 @@ ASYNC_FIFOはFPGAベンダーに依存しない非同期FIFOモジュールで�
 作者が非同期FIFOの構造を理解するためにVerilog-2005で記述されています。  
 テストベンチはSystemVerilog-2012で記述されています。
 
+## 開発状況
+![Version](https://img.shields.io/badge/Version-v0.10-green)
+![license](https://img.shields.io/badge/license-CERN--OHL--W_v2-blue)
+
 ## 特徴
 この非同期FIFOは以下4つの特徴をもちます。
 ### Almost Full/Empty
