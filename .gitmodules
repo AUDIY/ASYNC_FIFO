@@ -1,3 +1,4 @@
 [submodule "src/AUDIY_Verilog_IP"]
 	path = src/AUDIY_Verilog_IP
-	url = D:/Document/Verilog/04_Repositories/AUDIY_Verilog_IP
+	url = https://github.com/AUDIY/AUDIY_Verilog_IP.git
+	branch = main
