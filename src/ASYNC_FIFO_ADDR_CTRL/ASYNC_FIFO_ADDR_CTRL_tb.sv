@@ -24,7 +24,7 @@
 |                                                                              |
 | As per CERN-OHL-W v2 section 4.1, should You produce hardware based on these |
 | sources, You must maintain the Source Location visible on the external case  |
-| of the FIR_x2 or other products you make using this source.                  |
+| of the ASYNC_FIFO or other products you make using this source.              |
 --------------------------------------------------------------------------------
 *
 -----------------------------------------------------------------------------*/
