@@ -52,7 +52,7 @@ These components are licensed under **CERN-OHL-P v2** and are **NOT covered by t
 - The memory depth must be a power of two.
 - FWFT (First-Word Fall-Through) mode is currently not functioning correctly and is planned for future support.
 - For reset handling, assert resets for both write and read sides simultaneously (e.g., by connecting the output of [ARESETN_SYNC](https://github.com/AUDIY/AUDIY_Verilog_IP/tree/main/ARESETN_SYNC)), and deassert them synchronously within each respective clock domain.
-- Almost Full/Empty and Programmable Full/Empty require Gray-to-binary conversion during detection, which may negatively impact Fmax. If these features are not needed, leaving them unconnected may allow synthesis tools to remove the संबंधित logic, potentially improving Fmax.
+- Almost Full/Empty and Programmable Full/Empty require Gray-to-binary conversion during detection, which may negatively impact Fmax. If these features are not needed, leaving them unconnected may allow synthesis tools to remove the logic, potentially improving Fmax.
 
 ## Licensed under CERN-OHL-W v2
 Copyright AUDIY 2026.                                                       
