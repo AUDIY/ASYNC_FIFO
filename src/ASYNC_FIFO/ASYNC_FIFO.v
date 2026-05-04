@@ -3,9 +3,9 @@
 *
 * Asynchronous FIFO
 *
-* Version: 0.10
+* Version: 0.11
 * Author : AUDIY
-* Date   : 2026/05/01
+* Date   : 2026/05/05
 *
 * Port
 *   Input
@@ -160,10 +160,16 @@ module ASYNC_FIFO #(
     );
 
     // Read address gray code synchronization
-    always @(posedge WRITE_CLK_I) begin
-        r_gray_sync[0] <= r_gray;
-        for (j = 1; j < DFF_SYNC_STAGE; j = j + 1) begin
-            r_gray_sync[j] <= r_gray_sync[j - 1];
+    always @(posedge WRITE_CLK_I or negedge WRITE_ARESETN_I) begin
+        if (WRITE_ARESETN_I == 1'b0) begin
+            for (j = 0; j < DFF_SYNC_STAGE; j = j + 1) begin
+                r_gray_sync[j] <= {(PTR_WIDTH){1'b0}};
+            end
+        end else begin
+            r_gray_sync[0] <= r_gray;
+            for (j = 1; j < DFF_SYNC_STAGE; j = j + 1) begin
+                r_gray_sync[j] <= r_gray_sync[j - 1];
+            end
         end
     end
 
@@ -234,10 +240,16 @@ module ASYNC_FIFO #(
     );
 
     // Write address gray code synchronization
-    always @(posedge READ_CLK_I) begin
-        w_gray_sync[0] <= w_gray;
-        for (k = 1; k < DFF_SYNC_STAGE; k = k + 1) begin
-            w_gray_sync[k] <= w_gray_sync[k - 1];
+    always @(posedge READ_CLK_I or negedge READ_ARESETN_I) begin
+        if (READ_ARESETN_I == 1'b0) begin
+            for (k = 0; k < DFF_SYNC_STAGE; k = k + 1) begin
+                w_gray_sync[k] <= {(PTR_WIDTH){1'b0}};
+            end
+        end else begin
+            w_gray_sync[0] <= w_gray;
+            for (k = 1; k < DFF_SYNC_STAGE; k = k + 1) begin
+                w_gray_sync[k] <= w_gray_sync[k - 1];
+            end 
         end
     end
 
