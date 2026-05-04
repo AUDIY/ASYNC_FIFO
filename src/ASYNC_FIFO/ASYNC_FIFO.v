@@ -90,6 +90,7 @@ module ASYNC_FIFO #(
 );
 
     localparam PTR_WIDTH = ADDR_WIDTH + 1;
+    localparam TRUE_DFF_SYNC_STAGE = (DFF_SYNC_STAGE < 2) ? 2 : DFF_SYNC_STAGE;
 
     wire w_en;
     
@@ -98,7 +99,7 @@ module ASYNC_FIFO #(
     wire [(PTR_WIDTH - 1):0] w_gray;
     wire [(PTR_WIDTH - 1):0] w_gray_next;
 
-    reg  [(PTR_WIDTH - 1):0] r_gray_sync [(DFF_SYNC_STAGE - 1):0];
+    reg  [(PTR_WIDTH - 1):0] r_gray_sync [(TRUE_DFF_SYNC_STAGE - 1):0];
     wire [(PTR_WIDTH - 1):0] r_gray_sync_last;
     wire [(PTR_WIDTH - 1):0] r_addr_sync_last;
 
@@ -117,7 +118,7 @@ module ASYNC_FIFO #(
     wire [(PTR_WIDTH - 1):0] r_gray;
     wire [(PTR_WIDTH - 1):0] r_gray_next;
 
-    reg  [(PTR_WIDTH - 1):0] w_gray_sync [(DFF_SYNC_STAGE - 1):0];
+    reg  [(PTR_WIDTH - 1):0] w_gray_sync [(TRUE_DFF_SYNC_STAGE - 1):0];
     wire [(PTR_WIDTH - 1):0] w_gray_sync_last;
     wire [(PTR_WIDTH - 1):0] w_addr_sync_last;
 
@@ -131,7 +132,7 @@ module ASYNC_FIFO #(
     integer i, j, k;
 
     initial begin
-        for (i = 0; i < DFF_SYNC_STAGE; i = i + 1) begin
+        for (i = 0; i < TRUE_DFF_SYNC_STAGE; i = i + 1) begin
             r_gray_sync[i] = {(PTR_WIDTH){1'b0}};
             w_gray_sync[i] = {(PTR_WIDTH){1'b0}};
         end
@@ -162,18 +163,18 @@ module ASYNC_FIFO #(
     // Read address gray code synchronization
     always @(posedge WRITE_CLK_I or negedge WRITE_ARESETN_I) begin
         if (WRITE_ARESETN_I == 1'b0) begin
-            for (j = 0; j < DFF_SYNC_STAGE; j = j + 1) begin
+            for (j = 0; j < TRUE_DFF_SYNC_STAGE; j = j + 1) begin
                 r_gray_sync[j] <= {(PTR_WIDTH){1'b0}};
             end
         end else begin
             r_gray_sync[0] <= r_gray;
-            for (j = 1; j < DFF_SYNC_STAGE; j = j + 1) begin
+            for (j = 1; j < TRUE_DFF_SYNC_STAGE; j = j + 1) begin
                 r_gray_sync[j] <= r_gray_sync[j - 1];
             end
         end
     end
 
-    assign r_gray_sync_last = r_gray_sync[DFF_SYNC_STAGE - 1];
+    assign r_gray_sync_last = r_gray_sync[TRUE_DFF_SYNC_STAGE - 1];
 
     // Full Detection
     assign w_full_wire = (w_gray_next == {~r_gray_sync_last[(PTR_WIDTH - 1):(PTR_WIDTH - 2)], r_gray_sync_last[(PTR_WIDTH - 3):0]});
@@ -242,18 +243,18 @@ module ASYNC_FIFO #(
     // Write address gray code synchronization
     always @(posedge READ_CLK_I or negedge READ_ARESETN_I) begin
         if (READ_ARESETN_I == 1'b0) begin
-            for (k = 0; k < DFF_SYNC_STAGE; k = k + 1) begin
+            for (k = 0; k < TRUE_DFF_SYNC_STAGE; k = k + 1) begin
                 w_gray_sync[k] <= {(PTR_WIDTH){1'b0}};
             end
         end else begin
             w_gray_sync[0] <= w_gray;
-            for (k = 1; k < DFF_SYNC_STAGE; k = k + 1) begin
+            for (k = 1; k < TRUE_DFF_SYNC_STAGE; k = k + 1) begin
                 w_gray_sync[k] <= w_gray_sync[k - 1];
             end 
         end
     end
 
-    assign w_gray_sync_last = w_gray_sync[DFF_SYNC_STAGE - 1];
+    assign w_gray_sync_last = w_gray_sync[TRUE_DFF_SYNC_STAGE - 1];
 
     // Empty Detection
     assign r_empty_wire = (r_gray_next == w_gray_sync_last);
