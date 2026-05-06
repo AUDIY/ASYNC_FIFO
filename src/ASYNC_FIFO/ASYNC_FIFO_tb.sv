@@ -5,7 +5,7 @@
 *
 * Version: 0.11
 * Author : AUDIY
-* Date   : 2026/05/05
+* Date   : 2026/05/06
 *
 * License
 --------------------------------------------------------------------------------
@@ -68,6 +68,8 @@ module ASYNC_FIFO_tb ();
 
     reg              RESETN   = 1'b0;
     integer unsigned w_random = '0;
+
+    reg [(DATA_WIDTH - 1):0] data_queue[$], data_expected;
 
     integer i, j;
 
@@ -140,31 +142,44 @@ module ASYNC_FIFO_tb ();
 
     // Write Operation
     initial begin
-        #(write_clk_half_cycle * 9);
+        repeat(10) @(posedge WRITE_CLK_I);
 
-        for (i = 0; i < 2 ** (ADDR_WIDTH); i = i + 1) begin
-            #(write_clk_half_cycle * 2);
-            WRITE_EN_I <= 1'b1;
-            w_random = $urandom();
-            WRITE_DATA_I <= w_random[(DATA_WIDTH - 1):0];
+        repeat(2) begin
+            for (i = 0; i < 2 ** (ADDR_WIDTH); i++) begin
+                @(posedge WRITE_CLK_I);
+                WRITE_EN_I = (i % 2 == 0) ? 1'b1 : 1'b0; // Write enable is asserted every other cycle.
+                if (WRITE_EN_I) begin
+                    WRITE_DATA_I = $urandom_range(0, 2 ** (DATA_WIDTH) - 1); // Random data generation.
+                    data_queue.push_back(WRITE_DATA_I); // Store the written data in the queue for later verification.
+                end
+            end
+
+            #50;
         end
-
-        #(write_clk_half_cycle * 2) WRITE_EN_I <= 1'b0;
-
     end
 
     // Read Operation
     initial begin
-        #(read_clk_half_cycle * 29);
+        repeat(20) @(posedge READ_CLK_I);
 
-        for (j = 0; j < 2 ** (ADDR_WIDTH); j = j + 1) begin
-            #(read_clk_half_cycle * 2);
-            READ_EN_I <= 1'b1;
+        repeat(2) begin
+            for (j = 0; j < 2 ** (ADDR_WIDTH); j++) begin
+                @(posedge READ_CLK_I);
+                READ_EN_I = (j % 2 == 0) ? 1'b1 : 1'b0; // Read enable is asserted every other cycle.
+                if (READ_EN_I) begin
+                    data_expected = data_queue.pop_front(); // Get the expected data from the queue.
+                    if (READ_DATA_O !== data_expected) begin
+                        $error("Data Mismatch at time %t: Expected %h, Got %h", $time, data_expected, READ_DATA_O);
+                    end else begin
+                        $display("Data Match at time %t: Expected %h, Got %h", $time, data_expected, READ_DATA_O);
+                    end
+                end
+            end
+
+            #50;
         end
 
-        #(read_clk_half_cycle * 2) READ_EN_I <= 1'b0;
-
-        #100 $finish;
+        $finish;
     end
 
 endmodule
