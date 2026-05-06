@@ -8,7 +8,7 @@ It is written in Verilog-2005 to help understand the internal architecture of as
 The testbench is written in SystemVerilog-2012.
 
 ## Status
-![Version](https://img.shields.io/badge/Version-v0.10-green)
+![Version](https://img.shields.io/badge/Version-v0.11-green)
 ![license](https://img.shields.io/badge/license-CERN--OHL--W_v2-blue)
 
 ## Features  
