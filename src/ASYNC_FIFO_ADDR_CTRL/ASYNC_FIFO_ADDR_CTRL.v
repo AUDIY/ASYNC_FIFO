@@ -3,9 +3,9 @@
 *
 * Address Controller for Asynchronous FIFO
 *
-* Version: 0.11
+* Version: 0.12
 * Author : AUDIY
-* Date   : 2026/05/06
+* Date   : 2026/05/17
 *
 * Port
 *   Input
