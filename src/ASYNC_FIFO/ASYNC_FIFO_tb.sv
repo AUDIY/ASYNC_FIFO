@@ -30,7 +30,7 @@
 -----------------------------------------------------------------------------*/
 `default_nettype none
 
-module ASYNC_FIFO_tb;
+module ASYNC_FIFO_tb();
 
     timeunit 1ns / 1ps;
 
