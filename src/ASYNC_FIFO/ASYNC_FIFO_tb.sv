@@ -3,9 +3,9 @@
 *
 * Testbench for ASYNC_FIFO.v
 *
-* Version: 0.12
+* Version: 0.13
 * Author : AUDIY
-* Date   : 2026/05/17
+* Date   : 2026/05/19
 *
 * License
 --------------------------------------------------------------------------------
@@ -72,6 +72,7 @@ module ASYNC_FIFO_tb();
     int j = 0;
 
     // Asynchronous Reset Synchronizer (Write Clock Domain)
+    // Please Refer https://github.com/AUDIY/AUDIY_Verilog_IP/tree/main/ARESETN_SYNC for detail.
     ARESETN_SYNC #(
         .STAGES(2)
     ) write_reset_sync (
@@ -81,6 +82,7 @@ module ASYNC_FIFO_tb();
     );
 
     // Asynchronous Reset Synchronizer (Read Clock Domain)
+    // Please Refer https://github.com/AUDIY/AUDIY_Verilog_IP/tree/main/ARESETN_SYNC for detail.
     ARESETN_SYNC #(
         .STAGES(2)
     ) read_reset_sync (
