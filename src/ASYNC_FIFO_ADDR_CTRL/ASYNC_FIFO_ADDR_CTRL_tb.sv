@@ -3,9 +3,9 @@
 *
 * Testbench for ASYNC_FIFO_ADDR_CTRL.v
 *
-* Version: 0.12
+* Version: 0.13
 * Author : AUDIY
-* Date   : 2026/05/17
+* Date   : 2026/05/19
 *
 * License
 --------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ module ASYNC_FIFO_ADDR_CTRL_tb ();
     reg unsigned [(ADDR_WIDTH-1):0] addr_count = '0;
 
     // Asynchronous Reset Synchronizer.
-    // Please Refer https://github.com/AUDIY/AUDIY_Verilog_IP/tree/main/ARESETN_SYNC
+    // Please Refer https://github.com/AUDIY/AUDIY_Verilog_IP/tree/main/ARESETN_SYNC for detail.
     ARESETN_SYNC #(
         .STAGES(2)
     ) ARESETN_SYNC (
