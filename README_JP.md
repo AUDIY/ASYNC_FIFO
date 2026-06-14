@@ -8,7 +8,7 @@ ASYNC_FIFOはFPGAベンダーに依存しない非同期FIFOモジュールで�
 テストベンチはSystemVerilog-2012で記述されています。
 
 ## 開発状況
-![Version](https://img.shields.io/badge/Version-v0.13-green)
+![Version](https://img.shields.io/badge/Version-v0.14-green)
 ![license](https://img.shields.io/badge/license-CERN--OHL--W_v2-blue)
 
 ## 特徴
@@ -39,7 +39,6 @@ ASYNC_FIFOはFPGAベンダーに依存しない非同期FIFOモジュールで�
 
 ## 備考
 - メモリの深さは2のべき乗にのみ対応します。
-- 現時点ではFWFT (First-Word Fall-Through) モードは正しく動作しません。将来的に対応予定です。
 - 書き込み側と読み込み側のリセットは[ARESETN_SYNC](https://github.com/AUDIY/AUDIY_Verilog_IP/tree/main/ARESETN_SYNC)の出力を接続するなどの方法でリセットを同時に行い、解除タイミングはそれぞれのクロックドメインで同期化してください。
 - Almost Full/EmptyおよびProgrammable Full/Emptyはその検出の過程でグレイコードをバイナリに変換するため、Fmax確保に不利になる場合があります。不要な場合は未接続とすることで論理合成時に関連する回路が削除されFmaxに有利になる可能性があります。
 
