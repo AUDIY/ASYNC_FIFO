@@ -3,9 +3,9 @@
 *
 * Testbench for ASYNC_FIFO.v
 *
-* Version: 0.13
+* Version: 0.14
 * Author : AUDIY
-* Date   : 2026/05/19
+* Date   : 2026/06/14
 *
 * License
 --------------------------------------------------------------------------------
@@ -43,7 +43,6 @@ module ASYNC_FIFO_tb();
     parameter PROGRAMMABLE_EMPTY_THRESHOLD = 2;
     parameter WRITE_PROTECT_FULL           = 1'b1;
     parameter READ_PROTECT_EMPTY           = 1'b1;
-    parameter FWFT                         = 1'b0;
     parameter DFF_SYNC_STAGE               = 2;
 
     reg                   WRITE_CLK_I = 1'b0;
@@ -99,7 +98,6 @@ module ASYNC_FIFO_tb();
         .PROGRAMMABLE_EMPTY_THRESHOLD(PROGRAMMABLE_EMPTY_THRESHOLD),
         .WRITE_PROTECT_FULL          (WRITE_PROTECT_FULL          ),
         .READ_PROTECT_EMPTY          (READ_PROTECT_EMPTY          ),
-        .FWFT                        (FWFT                        ),
         .DFF_SYNC_STAGE              (DFF_SYNC_STAGE              )
     ) dut (
         // Write Side

@@ -3,9 +3,9 @@
 *
 * Asynchronous FIFO
 *
-* Version: 0.13
+* Version: 0.14
 * Author : AUDIY
-* Date   : 2026/05/19
+* Date   : 2026/06/14
 *
 * Port
 *   Input
@@ -33,7 +33,6 @@
 *       PROGRAMMABLE_EMPTY_THRESHOLD: Programmable Empty Threshold (Default: 4)
 *       WRITE_PROTECT_FULL          : Write Protect Full Enable (Default: 1'b1)
 *       READ_PROTECT_EMPTY          : Read Protect Empty Enable (Default: 1'b1)
-*       FWFT                        : First Word Fall Through Enable (Default: 1'b0)
 *       DFF_SYNC_STAGE              : The number of D-FF Synchronizer Stage (Default: 2)
 *
 * License
@@ -67,7 +66,6 @@ module ASYNC_FIFO #(
     parameter PROGRAMMABLE_EMPTY_THRESHOLD = 4,
     parameter WRITE_PROTECT_FULL           = 1'b1,
     parameter READ_PROTECT_EMPTY           = 1'b1,
-    parameter FWFT                         = 1'b0,
     parameter DFF_SYNC_STAGE               = 2
 ) (
     /* Write Domain */
@@ -113,7 +111,6 @@ module ASYNC_FIFO #(
     wire r_en;
     
     wire [(PTR_WIDTH - 1):0] r_addr;
-    wire [(PTR_WIDTH - 1):0] r_addr_nofwft;
     wire [(PTR_WIDTH - 1):0] r_addr_next;
     wire [(PTR_WIDTH - 1):0] r_gray;
     wire [(PTR_WIDTH - 1):0] r_gray_next;
@@ -234,7 +231,7 @@ module ASYNC_FIFO #(
         .CLK_I      (READ_CLK_I    ),
         .ARESETN_I  (READ_ARESETN_I),
         .ENABLE_I   (r_en          ),
-        .ADDR_O     (r_addr_nofwft ),
+        .ADDR_O     (r_addr        ),
         .GRAY_O     (r_gray        ),
         .NEXT_ADDR_O(r_addr_next   ),
         .NEXT_GRAY_O(r_gray_next   )
@@ -299,14 +296,6 @@ module ASYNC_FIFO #(
     end
 
     /* RAM */
-    generate
-        if (FWFT == 1'b1) begin: genif_fwft1
-            assign r_addr = r_addr_nofwft + (r_en ? 1'b1 : 1'b0);
-        end else begin: genif_fwft0
-            assign r_addr = r_addr_nofwft;
-        end
-    endgenerate
-
     // Simple Dual Port RAM
     // Please Refer https://github.com/AUDIY/AUDIY_Verilog_IP/tree/main/Memory/SDPRAM_DUALCLK for more detail
     SDPRAM_DUALCLK #(
